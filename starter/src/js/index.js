@@ -24,7 +24,6 @@ const state = {}
 // Search Controller
 const controlSearch = async () => {
     const query = searchView.getInput(); //TODO
-    console.log(query);
 
     if (query) {
         // New search object and add to state
@@ -71,7 +70,6 @@ const controlRecipe = async () => {
     // Get ID from url
     // window.location is entire url
     const id = window.location.hash.replace('#', '');
-    console.log(id);
 
     if (id) {
         // Prepare UI for changes
@@ -139,8 +137,6 @@ elements.shopping.addEventListener('click', e => {
     }
 });
 
-// test
-state.likes = new Likes();
 /**
  *  Like controller
  */
@@ -173,9 +169,27 @@ const controlLike = () => {
         // Remove like to the UI list
         likeView.deleteLike(currentID);
     }
-    console.log("num of like is :" + state.likes.getNumLikes());
     likeView.toggleLikeMenu(state.likes.getNumLikes());
 }
+
+// rESOTR LIKED recipe on page load
+window.addEventListener('load', () => {
+     state.likes = new Likes();
+    //read from storage
+    state.likes.readStorage();
+
+    // Toggole like menu button
+    likeView.toggleLikeMenu(state.likes.getNumLikes());
+
+    // render the existing likes
+    
+    try{
+        state.likes.likes.forEach(like => likeView.renderLike(like));
+    }
+    catch (err){
+        alert(err);
+    }
+});
 
 
 // Handleing recipe button clicks
@@ -200,5 +214,3 @@ elements.recipe.addEventListener('click', e => {
     }
     //console.log(state.recipe);
 });
-
-//window.l = new List();

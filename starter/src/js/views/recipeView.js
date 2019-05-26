@@ -5,11 +5,13 @@ export const clearRecipe = () => {
     elements.recipe.innerHTML = '';
 }
 
+// 0.33333333
 const formatCount = count => {
     if (count) {
         // count = 2.5 ==> 2 1/2
         // count = 0.5 ==> 1/2
-        const [int, dec] = count.toString().split('.').map(el => parseInt(el, 10));
+        const newCount = Math.round(count * 100) / 100;
+        const [int, dec] = newCount.toString().split('.').map(el => parseInt(el, 10));
 
         if (!dec) return count;
 
